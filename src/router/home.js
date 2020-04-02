@@ -1,4 +1,4 @@
-const Tabbar = () => import('@/components/Tabbar/');
+const Tabbar = () => import('@/components/Tabbar/')
 export default [
   {
     path: '/home',
@@ -6,9 +6,9 @@ export default [
     components: {
       default: () => import('@/views/home/tabbar-home'),
       tabbar: Tabbar
-    },  
+    },
     meta: {
       keepAlive: true
     }
   }
-];
+]

@@ -1,22 +1,22 @@
-const tab_user = () => import('@/views/user/tabbar-user');
-const NavBar = () => import('@/components/NavBar/');
-const UserCollect = () => import('@/views/user/module-collect');
-const UserAddress = () => import('@/views/user/module-address');
-const UserAddressEdit = () => import('@/views/user/module-address-edit');
-const UserServer = () => import('@/views/user/module-server');
-const UserHelp = () => import('@/views/user/module-help');
-const UserFeedback = () => import('@/views/user/module-feedback');
+const tab_user = () => import('@/views/user/tabbar-user')
+const NavBar = () => import('@/components/NavBar/')
+const UserCollect = () => import('@/views/user/module-collect')
+const UserAddress = () => import('@/views/user/module-address')
+const UserAddressEdit = () => import('@/views/user/module-address-edit')
+const UserServer = () => import('@/views/user/module-server')
+const UserHelp = () => import('@/views/user/module-help')
+const UserFeedback = () => import('@/views/user/module-feedback')
 
-const UserInformation = () => import('@/views/user/user-information-set');
-const UserInfo_SetMobile = () => import('@/views/user/user-information-set/set-mobile');
-const UserInfo_SetNickname = () => import('@/views/user/user-information-set/set-nickname');
-const UserInfo_SetPassword = () => import('@/views/user/user-information-set/set-password');
+// const UserInformation = () => import('@/views/user/user-information-set')
+const UserInfo_SetMobile = () => import('@/views/user/user-information-set/set-mobile')
+const UserInfo_SetNickname = () => import('@/views/user/user-information-set/set-nickname')
+const UserInfo_SetPassword = () => import('@/views/user/user-information-set/set-password')
 
-const UserOrderList = () => import('@/views/user/order-list');
-const UserCouponList = () => import('@/views/user/coupon-list');
-const UserRefundList = () => import('@/views/user/refund-list');
+const UserOrderList = () => import('@/views/user/order-list')
+const UserCouponList = () => import('@/views/user/coupon-list')
+const UserRefundList = () => import('@/views/user/refund-list')
 
-const Tabbar = () => import('@/components/Tabbar/');
+const Tabbar = () => import('@/components/Tabbar/')
 
 export default [
   {
@@ -66,7 +66,7 @@ export default [
     path: '/user/feedback',
     name: 'user-feedback',
     component: UserFeedback
-  },  
+  },
   {
     path: '/user/information',
     name: 'user-information',
@@ -77,7 +77,7 @@ export default [
       default: () => import('@/views/user/user-information-set'),
       navBar: NavBar,
       tabbar: Tabbar
-    },  
+    }
     // component: UserInformation
   },
   {
@@ -112,4 +112,4 @@ export default [
     name: 'user-refund-list',
     component: UserRefundList
   }
-];
+]
