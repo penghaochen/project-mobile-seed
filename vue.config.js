@@ -1,7 +1,7 @@
-const path = require('path');
+const path = require('path')
 
 function resolve(dir = '') {
-  return path.join(__dirname, './src', dir);
+  return path.join(__dirname, './src', dir)
 }
 
 module.exports = {
@@ -10,12 +10,12 @@ module.exports = {
   assetsDir: 'static',
   productionSourceMap: false,
   devServer: {
-    //九键输入法的 「mall」= 「6255」
-    port: 6255,
+    // 九键输入法的 「mall」= 「6255」
+    port: 6255
   },
   chainWebpack: config => {
-    config.plugins.delete('prefetch');
-    config.plugins.delete('preload');
+    config.plugins.delete('prefetch')
+    config.plugins.delete('preload')
   },
   configureWebpack: {
     resolve: {
@@ -44,4 +44,4 @@ module.exports = {
       }
     }
   }
-};
+}

@@ -1,30 +1,28 @@
-import Vue from 'vue';
-import Router from 'vue-router';
-import { getLocalStorage } from '@/utils/local-storage';
+import Vue from 'vue'
+import Router from 'vue-router'
+// import { getStore } from '@/utils/store'
+// 首页模块
+import home from './home'
+// 用户模块
+import user from './user'
+// 登录模块
+import login from './login'
 
-import home from './home';
-import items from './items';
-import user from './user';
-import order from './order';
-import login from './login';
-
-Vue.use(Router);
-
+Vue.use(Router)
+// 配置路由
 const RouterModel = new Router({
-  routes: [...home, ...items, ...user, ...order, ...login]
-});
-
+  routes: [...home, ...user, ...login]
+})
+// 路由拦截器
 RouterModel.beforeEach((to, from, next) => {
-  // const { Authorization } = getLocalStorage(
-  //   'Authorization'
-  // );
+  // const Authorization=getStore({ name: 'Authorization' })
   // if (!Authorization) {
   //   if (to.meta.login) {
   //     next({ name: 'login', query: { redirect: to.name } });
   //     return;
   //   }
   // }
-  next();
-});
+  next()
+})
 
-export default RouterModel;
+export default RouterModel

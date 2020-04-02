@@ -2,30 +2,30 @@
   <div class="user_information">
     <van-cell-group>
       <van-cell title="头像" class="cell_middle">
-        <van-uploader :afterRead="avatarAfterRead">
+        <van-uploader :after-read="avatarAfterRead">
           <div class="user_avatar_upload">
             <img
+              v-if="avatar"
               :src="avatar + '?x-oss-process=image/resize,m_fill,h_50,w_50'"
               alt="你的头像"
-              v-if="avatar"
             >
-            <van-icon name="camera_full" v-else></van-icon>
+            <van-icon v-else name="camera_full"/>
           </div>
         </van-uploader>
       </van-cell>
 
-      <van-cell title="昵称" to="/user/information/setNickname" :value="nickName" isLink/>
-      <van-cell title="性别" :value="genderText" @click="showSex = true" isLink/>
-      <van-cell title="密码设置" to="/user/information/setPassword" isLink/>
-      <van-cell title="手机号" to="/user/information/setMobile" :value="mobile" isLink></van-cell>
+      <van-cell :value="nickName" title="昵称" to="/user/information/setNickname" is-link/>
+      <van-cell :value="genderText" title="性别" is-link @click="showSex = true"/>
+      <van-cell title="密码设置" to="/user/information/setPassword" is-link/>
+      <van-cell :value="mobile" title="手机号" to="/user/information/setMobile" is-link/>
     </van-cell-group>
 
     <van-button size="large" class="user_quit" @click="loginOut">退出当前账户</van-button>
 
     <van-popup v-model="showSex" position="bottom">
       <van-picker
-        showToolbar
         :columns="sexColumns"
+        show-toolbar
         title="选择性别"
         @cancel="showSex = false"
         @confirm="onSexConfirm"
@@ -35,12 +35,18 @@
 </template>
 
 <script>
-import { Uploader, Picker, Popup, Button } from 'vant';
-import { removeLocalStorage } from '@/utils/local-storage';
-import { getLocalStorage } from '@/utils/local-storage';
-import { authInfo, authLogout, authProfile } from '@/api/api';
+import { Uploader, Picker, Popup, Button } from 'vant'
+import { removeStore } from '@/utils/store'
+import { authInfo, authLogout } from '@/api/api'
 
 export default {
+
+  components: {
+    [Button.name]: Button,
+    [Uploader.name]: Uploader,
+    [Picker.name]: Picker,
+    [Popup.name]: Popup
+  },
   data() {
     return {
       sexColumns: [
@@ -54,55 +60,55 @@ export default {
       nickName: '',
       gender: 0,
       mobile: ''
-    };
+    }
   },
 
   computed: {
     genderText() {
-      const text = ['保密', '男', '女'];
-      return text[this.gender] || '';
+      const text = ['保密', '男', '女']
+      return text[this.gender] || ''
     }
   },
 
   created() {
-    this.getUserInfo();
+    this.getUserInfo()
   },
 
   methods: {
     avatarAfterRead(file) {
-      console.log(file);
+      console.log(file)
     },
-    onSexConfirm(value, index) {
-      this.showSex = false;
+    onSexConfirm() {
+      this.showSex = false
     },
     getUserInfo() {
       authInfo().then(res => {
-        this.avatar = res.data.data.avatar;
-        this.nickName = res.data.data.nickName;
-        this.gender = res.data.data.gender;
-        this.mobile = res.data.data.mobile;
+        this.avatar = res.data.data.avatar
+        this.nickName = res.data.data.nickName
+        this.gender = res.data.data.gender
+        this.mobile = res.data.data.mobile
       })
     },
     loginOut() {
-      authLogout().then(res => {
-        removeLocalStorage('Authorization')
-        removeLocalStorage('avatar')
-        removeLocalStorage('nickName')
-        this.$router.push({ name: 'home' });
-      });
-
+      authLogout().then(() => {
+        removeStore({
+          name: 'Authorization',
+          type: 'local'
+        })
+        removeStore({
+          name: 'avatar',
+          type: 'local'
+        })
+        removeStore({
+          name: 'nickName',
+          type: 'local'
+        })
+        this.$router.push({ name: 'home' })
+      })
     }
-  },
-
-  components: {
-    [Button.name]: Button,
-    [Uploader.name]: Uploader,
-    [Picker.name]: Picker,
-    [Popup.name]: Popup
   }
-};
+}
 </script>
-
 
 <style lang="scss" scoped>
 .user_information {

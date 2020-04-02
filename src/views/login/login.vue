@@ -1,11 +1,11 @@
 <template>
-	<div class="login">
-    	<div class="store_header">
-		<div class="store_avatar">
-			<img src="../../assets/images/avatar_default.png" alt="头像" width="55" height="55">
-		</div>
-		<div class="store_name">登录</div>
-	</div>
+  <div class="login">
+    <div class="store_header">
+      <div class="store_avatar">
+        <img src="../../assets/images/avatar_default.png" alt="头像" width="55" height="55">
+      </div>
+      <div class="store_name">登录</div>
+    </div>
 
     <md-field-group>
       <md-field
@@ -20,10 +20,10 @@
 
       <md-field
         v-model="password"
-        icon="lock"
-        placeholder="请输入测试密码 user123"
         :type="visiblePass ? 'text' : 'password'"
         :right-icon="visiblePass ? 'eye-open' : 'eye-close'"
+        icon="lock"
+        placeholder="请输入测试密码 user123"
         data-vv-as="密码"
         name="password"
         @right-click="visiblePass = !visiblePass"
@@ -38,28 +38,26 @@
         </div>
       </div>
 
-      <van-button size="large" type="danger" :loading="isLogining" @click="loginSubmit">登录</van-button>
+      <van-button :loading="isLogining" size="large" type="danger" @click="loginSubmit">登录</van-button>
     </md-field-group>
 
+    <div class="text-desc text-center bottom_positon">技术支持: loong easygroup</div>
 
-      <div class="text-desc text-center bottom_positon">技术支持: loong easygroup</div>
-
-	</div>
+  </div>
 </template>
 
 <script>
-import field from '@/components/field/';
-import fieldGroup from '@/components/field-group/';
+import field from '@/components/field/'
+import fieldGroup from '@/components/field-group/'
 
-import { authLoginByAccount } from '@/api/api';
-import { setLocalStorage } from '@/utils/local-storage';
-import { emailReg, mobileReg } from '@/utils/validate';
+import { authLoginByAccount } from '@/api/api'
+import { setStore } from '@/utils/store'
+import { emailReg, mobileReg } from '@/utils/validate'
 
-import { Toast } from 'vant';
-
+import { Toast } from 'vant'
 
 export default {
-  name: 'login-request',
+  name: 'LoginRequest',
   components: {
     [field.name]: field,
     [fieldGroup.name]: fieldGroup,
@@ -72,12 +70,12 @@ export default {
       visiblePass: false,
       isLogining: false,
       userInfo: {}
-    };
+    }
   },
 
   methods: {
     clearText() {
-      this.account = '';
+      this.account = ''
     },
 
     validate() {
@@ -85,30 +83,40 @@ export default {
     },
 
     login() {
-      let loginData = this.getLoginData();
+      const loginData = this.getLoginData()
       authLoginByAccount(loginData).then(res => {
-        this.userInfo = res.data.data.userInfo;
-        setLocalStorage({
-          Authorization: res.data.data.token,
-          avatar: this.userInfo.avatarUrl,
-          nickName: this.userInfo.nickName
-        });
+        this.userInfo = res.data.data.userInfo
+        setStore({
+          name: 'Authorization',
+          content: res.data.data.token,
+          type: 'local'
+        })
+        setStore({
+          name: 'avatar',
+          content: this.userInfo.avatarUrl,
+          type: 'local'
+        })
+        setStore({
+          name: 'nickName',
+          content: this.userInfo.nickName,
+          type: 'local'
+        })
 
-        this.routerRedirect();
+        this.routerRedirect()
       }).catch(error => {
-        Toast.fail(error.data.errmsg);
-      });
+        Toast.fail(error.data.errmsg)
+      })
     },
 
     loginSubmit() {
-      this.isLogining = true;
+      this.isLogining = true
       try {
-        this.validate();
-        this.login();
-        this.isLogining = false;
+        this.validate()
+        this.login()
+        this.isLogining = false
       } catch (err) {
-        console.log(err.message);
-        this.isLogining = false;
+        console.log(err.message)
+        this.isLogining = false
       }
     },
 
@@ -118,30 +126,29 @@ export default {
       //   name: query.redirect || 'home',
       //   query: query
       // });
-      window.location = '#/user/';
+      window.location = '#/user/'
     },
 
     getLoginData() {
-      const password = this.password;
-      const account = this.getUserType(this.account);
+      const password = this.password
+      const account = this.getUserType(this.account)
       return {
         [account]: this.account,
         password: password
-      };
+      }
     },
 
     getUserType(account) {
       const accountType = mobileReg.test(account)
         ? 'mobile'
         : emailReg.test(account)
-        ? 'email'
-        : 'username';
-      return accountType;
+          ? 'email'
+          : 'username'
+      return accountType
     }
   }
-};
+}
 </script>
-
 
 <style lang="scss" scoped>
 @import '../../assets/scss/mixin';

@@ -4,11 +4,10 @@ import home from './home'
 import login from './login'
 import userinfo from './user'
 
-
 const mocks = [
   ...home,
   ...login,
-  ...userinfo,
+  ...userinfo
 
 ]
 

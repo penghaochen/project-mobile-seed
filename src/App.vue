@@ -1,13 +1,13 @@
 <template>
-<div id="app">
-  
-  <router-view name="navBar"></router-view>
-  <keep-alive>
-    <router-view class="view-router"  v-if="$route.meta.keepAlive"></router-view>
-  </keep-alive>
-  <router-view class="view-router" v-if="!$route.meta.keepAlive"></router-view>
-  <router-view name="tabbar"></router-view>
-</div>
+  <div id="app">
+
+    <router-view name="navBar"/>
+    <keep-alive>
+      <router-view v-if="$route.meta.keepAlive" class="view-router"/>
+    </keep-alive>
+    <router-view v-if="!$route.meta.keepAlive" class="view-router"/>
+    <router-view name="tabbar"/>
+  </div>
 </template>
 
 <style lang="scss" src="./assets/scss/global.scss" />

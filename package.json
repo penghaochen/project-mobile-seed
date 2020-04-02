@@ -1,8 +1,8 @@
 {
-  "name": "litemall-vue",
+  "name": "project-mobile-seed",
   "version": "0.1.0",
-  "description": "litemall-vue basing on vant--mobile-mall 0.1.0",
-  "author": "litemall <linlinjava@163.com>",
+  "description": "A vue project with vant ,use vant UI & axios & vuex & vue-router",
+  "author": "penghc <penghaochen610@qq.com>",
   "license": "MIT",
   "private": true,
   "scripts": {
@@ -22,7 +22,8 @@
     "vant": "^2.0.6",
     "vue": "^2.5.17",
     "vue-router": "^3.0.1",
-    "vuelidate": "^0.7.4"
+    "vuelidate": "^0.7.4",
+    "weixin-js-sdk": "^1.4.0-test"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.5",

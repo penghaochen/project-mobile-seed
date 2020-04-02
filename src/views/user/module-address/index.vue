@@ -6,58 +6,62 @@
 </template>
 
 <script>
-import { addressList, addressDetail, addressSave, addressDelete } from '@/api/api';
-import { AddressList, NavBar } from 'vant';
-import { setLocalStorage } from '@/utils/local-storage';
+import { addressList } from '@/api/api'
+import { AddressList, NavBar } from 'vant'
+import { setStore } from '@/utils/store'
 
 export default {
+
+  components: {
+    [NavBar.name]: NavBar,
+    [AddressList.name]: AddressList
+  },
   data() {
     return {
       chosenAddressId: -1,
       addressList: []
-    };
+    }
   },
 
   created() {
-    this.loadAddress();
+    this.loadAddress()
   },
   methods: {
     onAdd() {
-      this.$router.push({ name: 'address-edit', query: { addressId: -1 } });
+      this.$router.push({ name: 'address-edit', query: { addressId: -1 }})
     },
-    onEdit(item, index) {
-      this.$router.push({ name: 'address-edit', query: { addressId: item.id } });
+    onEdit(item) {
+      this.$router.push({ name: 'address-edit', query: { addressId: item.id }})
     },
-    onSelect(item, index) {
-      setLocalStorage({ AddressId: item.id });
-      this.$router.go(-1);
-    },         
+    onSelect(item) {
+      setStore({
+        name: 'AddressId',
+        content: item.id,
+        type: 'local'
+      })
+      // setLocalStorage({ AddressId: item.id });
+      this.$router.go(-1)
+    },
     goback() {
-      this.$router.go(-1);
+      this.$router.go(-1)
     },
     loadAddress() {
       addressList().then(res => {
-        var list = res.data.data.list;
-        for(var i = 0; i < list.length; i++ ){
+        var list = res.data.data.list
+        for (var i = 0; i < list.length; i++) {
           var item = list[i]
           this.addressList.push({
             id: item.id,
             name: item.name,
             tel: item.tel,
-            address: item.province + item.city + item.county + " " + item.addressDetail
+            address: item.province + item.city + item.county + ' ' + item.addressDetail
           })
         }
       })
     }
-  },
-
-  components: {
-    [NavBar.name]: NavBar,
-    [AddressList.name]: AddressList 
   }
-};
+}
 </script>
-
 
 <style lang="scss" scoped>
 .addressGroup {
