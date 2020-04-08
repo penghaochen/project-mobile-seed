@@ -34,15 +34,14 @@ Vue.use(Toast)
 //   lazyComponent: true
 // })
 // 模拟交易数据
-import {
-  mockXHR
-} from '../mock'
+// import {
+//   mockXHR
+// } from '../mock'
 
-if (process.env.NODE_ENV === 'development') {
-// 使用mock数据 放开注释
-  mockXHR()
-}
-
+// if (process.env.NODE_ENV === 'development') {
+// // 使用mock数据 放开注释
+//   mockXHR()
+// }
 Vue.config.productionTip = false
 
 new Vue({

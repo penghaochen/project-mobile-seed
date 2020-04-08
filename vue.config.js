@@ -11,7 +11,22 @@ module.exports = {
   productionSourceMap: false,
   devServer: {
     // 九键输入法的 「mall」= 「6255」
-    port: 6255
+    host: '0.0.0.0',
+    port: 8088,
+    proxy: {
+      // change xxx-api/login => mock/login
+      // detail: https://cli.vuejs.org/config/#devserver-proxy
+      [process.env.VUE_APP_BASE_API]: {
+        target: `http://192.168.3.9:6255/mock`, // 本地mock数据
+        // target:'http://192.168.228.35:9999',// 服务地址
+        // target: 'http://192.168.230.228:8761', // 服务地址
+        changeOrigin: true,
+        ws: true,
+        pathRewrite: {
+          ['^' + process.env.VUE_APP_BASE_API]: ''
+        }
+      }
+    }
   },
   chainWebpack: config => {
     config.plugins.delete('prefetch')

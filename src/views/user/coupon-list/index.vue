@@ -1,32 +1,36 @@
 <template>
   <div class="coupon_list">
-    <van-tabs v-model="activeIndex"
-              type="card"
-              sticky
-              @click="handleTabClick">
-      <van-tab v-for="(tabTitle, tabIndex) in tabTitles"
-               :title="tabTitle"
-               :key="tabIndex">
-        <van-list v-model="loading"
-                  :finished="finished"
-                  :immediate-check="false"
-                  finished-text="没有更多了"
-                  @load="getCouponList">
+    <van-tabs
+      v-model="activeIndex"
+      type="card"
+      sticky
+      @click="handleTabClick">
+      <van-tab
+        v-for="(tabTitle, tabIndex) in tabTitles"
+        :title="tabTitle"
+        :key="tabIndex">
+        <van-list
+          v-model="loading"
+          :finished="finished"
+          :immediate-check="false"
+          finished-text="没有更多了"
+          @load="getCouponList">
           <van-panel style=" padding-bottom: 10px;">
-            <div class="van-coupon-item"
-                 v-for="(coupon,index) in couponList"
-                 :key="index">
+            <div
+              v-for="(coupon,index) in couponList"
+              :key="index"
+              class="van-coupon-item">
               <div class="van-coupon-item__content">
                 <div class="van-coupon-item__head">
                   <h2>
                     <span>¥</span>
-                    {{coupon.discount}} 元
+                    {{ coupon.discount }} 元
                   </h2>
-                  <p>{{coupon.desc }} - {{coupon.tag}}</p>
+                  <p>{{ coupon.desc }} - {{ coupon.tag }}</p>
                 </div>
                 <div class="van-coupon-item__body">
-                  <h2>{{coupon.name}}</h2>
-                  <p>有效期: 至 {{coupon.endTime}}</p>
+                  <h2>{{ coupon.name }}</h2>
+                  <p>有效期: 至 {{ coupon.endTime }}</p>
 
                 </div>
               </div>
@@ -40,22 +44,28 @@
 </template>
 
 <script>
-import { couponMyList } from '@/api/api';
+import { couponMyList } from '@/api/api'
 
-import { Tab, Tabs, Panel, Card, List, CouponCell, CouponList } from 'vant';
-import _ from 'lodash';
+import { Tab, Tabs, Panel, Card, List, CouponCell, CouponList } from 'vant'
+import 'lodash'
 
 export default {
-  name: 'coupon-list',
+  name: 'CouponList',
+  components: {
+    [Tab.name]: Tab,
+    [Tabs.name]: Tabs,
+    [Panel.name]: Panel,
+    [Card.name]: Card,
+    [List.name]: List,
+    CouponCell,
+    CouponList
+  },
 
   props: {
     active: {
       type: [String, Number],
       default: 0
     }
-  },
-  created() {
-    this.init();
   },
   data() {
     return {
@@ -66,45 +76,39 @@ export default {
       limit: 10,
       loading: false,
       finished: false
-    };
+    }
+  },
+  created() {
+    this.init()
   },
 
   methods: {
     init() {
-      this.page = 0;
-      this.couponList = [];
-      this.getCouponList();
+      this.page = 0
+      this.couponList = []
+      this.getCouponList()
     },
     getCouponList() {
-      this.page++;
+      this.page++
 
       couponMyList({
         status: this.activeIndex,
         page: this.page,
         limit: this.limit
       }).then(res => {
-        this.couponList.push(...res.data.data.list);
+        this.couponList.push(...res.data.data.list)
 
-        this.loading = false;
-        this.finished = res.data.data.page >= res.data.data.pages;
-      });
+        this.loading = false
+        this.finished = res.data.data.page >= res.data.data.pages
+      })
     },
     handleTabClick() {
-      this.page = 0;
-      this.couponList = [];
-      this.getCouponList();
+      this.page = 0
+      this.couponList = []
+      this.getCouponList()
     }
-  },
-  components: {
-    [Tab.name]: Tab,
-    [Tabs.name]: Tabs,
-    [Panel.name]: Panel,
-    [Card.name]: Card,
-    [List.name]: List,
-    CouponCell,
-    CouponList
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

@@ -7,11 +7,13 @@ import home from './home'
 import user from './user'
 // 登录模块
 import login from './login'
+// 转账模块
+import transfer from './transfer'
 
 Vue.use(Router)
 // 配置路由
 const RouterModel = new Router({
-  routes: [...home, ...user, ...login]
+  routes: [...home, ...user, ...login, ...transfer]
 })
 // 路由拦截器
 RouterModel.beforeEach((to, from, next) => {

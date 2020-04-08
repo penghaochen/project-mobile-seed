@@ -10,14 +10,19 @@ export function getConfig(url, params) {
     }
   })
 }
-
-export function pay(price) {
+// 获取收款人列表
+export function getAccountList(data) {
   return request({
-    url: '/api/spa-pay',
+    url: 'QueryAccountList.do',
     method: 'get',
-    params: {
-      price
-    }
+    params: data
   })
 }
-
+// 转账
+export function transfer(data) {
+  return request({
+    url: 'Transfer.do',
+    method: 'get',
+    params: data
+  })
+}

@@ -1,60 +1,63 @@
 <template>
-	<div class="payment_status">
-		<div class="status_top">
-			<van-icon :name="statusIcon" :class="statusClass" />
-			<div>{{statusText}}</div>
-		</div>
+  <div class="payment_status">
+    <div class="status_top">
+      <van-icon :name="statusIcon" :class="statusClass" />
+      <div>{{ statusText }}</div>
+    </div>
 
-		<div class="status_text">
-			<span class="red">
-				<countdown v-if="counting" :time="3000" @end="countDownEnd">
-					<template slot-scope="props">{{ +props.seconds || 3 }}</template>秒
-				</countdown>
-			</span>
-			后返回到登录页, 您也可以
-			<router-link to="/login" class="red">点此登录</router-link>
-		</div>
-	</div>
+    <div class="status_text">
+      <span class="red">
+        <countdown v-if="counting" :time="3000" @end="countDownEnd">
+          <template slot-scope="props">{{ +props.seconds || 3 }}</template>秒
+        </countdown>
+      </span>
+      后返回到登录页, 您也可以
+      <router-link to="/login" class="red">点此登录</router-link>
+    </div>
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'payment-status',
+  name: 'PaymentStatus',
 
   props: {
-    status: String
+    status: {
+      type: String,
+      default: ''
+    }
+
   },
 
   data() {
     return {
       counting: true,
       isSuccess: true
-    };
+    }
   },
-  methods:{
-		countDownEnd() {
-			this.counting = false;
-			window.location = '#/login/';
-		}
-	},
   computed: {
     statusText() {
-      return this.isSuccess ? '修改成功' : '修改失败';
+      return this.isSuccess ? '修改成功' : '修改失败'
     },
     statusIcon() {
-      return this.isSuccess ? 'checked' : 'fail';
+      return this.isSuccess ? 'checked' : 'fail'
     },
     statusClass() {
-      return this.isSuccess ? 'success_icon' : 'fail_icon';
+      return this.isSuccess ? 'success_icon' : 'fail_icon'
     }
   },
 
   activated() {
-    this.isSuccess = this.status === 'success';
+    this.isSuccess = this.status === 'success'
+  },
+  methods: {
+    countDownEnd() {
+      this.counting = false
+      window.location = '#/login/'
+    }
   }
-};
+}
 </script>
-
 
 <style lang="scss" scopd>
 .payment_status {

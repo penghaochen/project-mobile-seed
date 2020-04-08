@@ -4,7 +4,7 @@
       <div class="store_avatar">
         <img src="../../assets/images/avatar_default.png" alt="头像" width="55" height="55">
       </div>
-      <div class="store_name">登录</div>
+      <div class="store_name">微信公众号</div>
     </div>
 
     <md-field-group>
@@ -38,7 +38,7 @@
         </div>
       </div>
 
-      <van-button :loading="isLogining" size="large" type="danger" @click="loginSubmit">登录</van-button>
+      <van-button :loading="isLogining" round size="large" type="danger" @click="loginSubmit">登录</van-button>
     </md-field-group>
 
     <div class="text-desc text-center bottom_positon">技术支持: loong easygroup</div>
@@ -50,8 +50,8 @@
 import field from '@/components/field/'
 import fieldGroup from '@/components/field-group/'
 
-import { authLoginByAccount } from '@/api/api'
-import { setStore } from '@/utils/store'
+// import { authLoginByAccount } from '@/api/api'
+// import { setStore } from '@/utils/store'
 import { emailReg, mobileReg } from '@/utils/validate'
 
 import { Toast } from 'vant'
@@ -83,29 +83,32 @@ export default {
     },
 
     login() {
-      const loginData = this.getLoginData()
-      authLoginByAccount(loginData).then(res => {
-        this.userInfo = res.data.data.userInfo
-        setStore({
-          name: 'Authorization',
-          content: res.data.data.token,
-          type: 'local'
-        })
-        setStore({
-          name: 'avatar',
-          content: this.userInfo.avatarUrl,
-          type: 'local'
-        })
-        setStore({
-          name: 'nickName',
-          content: this.userInfo.nickName,
-          type: 'local'
-        })
+      // const loginData = this.getLoginData()
+      this.getLoginData()
+      this.routerRedirect()
+      return
+      // authLoginByAccount(loginData).then(res => {
+      //   this.userInfo = res.data.data.userInfo
+      //   setStore({
+      //     name: 'Authorization',
+      //     content: res.data.data.token,
+      //     type: 'local'
+      //   })
+      //   setStore({
+      //     name: 'avatar',
+      //     content: this.userInfo.avatarUrl,
+      //     type: 'local'
+      //   })
+      //   setStore({
+      //     name: 'nickName',
+      //     content: this.userInfo.nickName,
+      //     type: 'local'
+      //   })
 
-        this.routerRedirect()
-      }).catch(error => {
-        Toast.fail(error.data.errmsg)
-      })
+      //   this.routerRedirect()
+      // }).catch(error => {
+      //   Toast.fail(error.data.errmsg)
+      // })
     },
 
     loginSubmit() {
@@ -122,11 +125,10 @@ export default {
 
     routerRedirect() {
       // const { query } = this.$route;
-      // this.$router.replace({
-      //   name: query.redirect || 'home',
-      //   query: query
-      // });
-      window.location = '#/user/'
+      this.$router.replace({
+        name: 'transfer'
+      })
+      // window.location = '#/transfer'
     },
 
     getLoginData() {

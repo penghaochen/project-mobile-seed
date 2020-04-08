@@ -1,14 +1,13 @@
 <template>
-	<div class="field_group">
-		<slot></slot>
-	</div>
+  <div class="field_group">
+    <slot/>
+  </div>
 </template>
-
 
 <script>
 export default {
-  name: 'md-field-group'
-};
+  name: 'MdFieldGroup'
+}
 </script>
 
 <style lang="scss" scoped>

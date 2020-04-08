@@ -1,23 +1,34 @@
 <template>
-	<van-nav-bar
-  title="标题"
-  left-text="返回"
-  right-text="按钮"
-  left-arrow
-  bind:click-left="onClickLeft"
-  bind:click-right="onClickRight"
-/>
+  <div>
+    <van-nav-bar
+      :title="title"
+      :fixed="true"
+      left-text="返回"
+      right-text=""
+      left-arrow
+      @click-right="onClickRight"
+      @click-left="onClickLeft"
+    />
+  </div>
 </template>
 
-
 <script>
-import { NavBar } from 'vant';
+import { NavBar } from 'vant'
 
 export default {
+  components: {
+    [NavBar.name]: NavBar
+  },
+  props: {
+    title: {
+      type: String,
+      default: '首页'
+    }
+  },
   data() {
     return {
 
-    };
+    }
   },
 
   watch: {
@@ -30,15 +41,13 @@ export default {
 
   methods: {
     onClickLeft() {
-        wx.showToast({ title: '点击返回', icon: 'none' });
+      this.$router.go(-1)
+      // wx.showToast({ title: '点击返回', icon: 'none' })
     },
     onClickRight() {
-        wx.showToast({ title: '点击按钮', icon: 'none' });
+      alert(2)
+      // wx.showToast({ title: '点击按钮', icon: 'none' })
     }
-  },
-
-  components: {
-    [NavBar.name]: NavBar
   }
-};
+}
 </script>
