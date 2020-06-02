@@ -4,38 +4,60 @@
  * @version 0.1.0
  */
 import axios from 'axios'
-import { Dialog } from 'vant'
+import {
+  Dialog
+} from 'vant'
+// import qs from 'qs'
+import store from '@/store'
+import {
+  baseUrl,
+  timeout,
+  headers
+} from '@/api/api.config'
 
-// create an axios instance
+// axios 配置
 const service = axios.create({
-  baseURL: process.env.VUE_APP_BASE_API, // api 的 base_url
-  timeout: 5000 // request timeout
+  baseURL: baseUrl, // 请求根路径
+  timeout: timeout // 超时时间
 })
 
-// request interceptor
+// 请求拦截器
 service.interceptors.request.use(
   config => {
-    if (!config.headers['X-Litemall-Token']) {
-      config.headers['X-Litemall-Token'] = `${window.localStorage.getItem(
-        'Authorization'
-      ) || ''}`
-    }
+    store.state.app.show = true // 打开遮罩
+    config.headers = headers // 配置公共请求头
+
     return config
   },
   err => Promise.reject(err)
 )
 
-// response interceptor
+// 返回拦截器
 service.interceptors.response.use(
   response => {
-    const res = response.data
+    store.state.app.show = false // 关闭遮罩
+    const res = response.data // 获取数据
+    if (res.returnCode === '000000') {
+      // 成功
+      return res
+    } else {
+      // 失败
+      Dialog.alert({
+        title: '警告',
+        message: JSON.stringify(res.message)
+      })
 
-    return res
+      return Promise.reject(res)
+    }
   }, error => {
-    console.log('err' + error)// for debug
+    alert(JSON.stringify(error))
+    console.log('err' + error) // for debug
+    store.state.app.show = false // 关闭遮罩
     Dialog.alert({
       title: '警告',
-      message: '连接超时'
+      message: '禁止访问'
+    }).then(() => {
+      // return Promise.reject(error)
     })
     return Promise.reject(error)
   })

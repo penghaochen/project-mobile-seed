@@ -3,9 +3,9 @@
     <van-nav-bar
       :title="title"
       :fixed="true"
-      left-text="返回"
-      right-text=""
-      left-arrow
+      :left-arrow="!isdisableback"
+      :left-text="!isdisableback?'返回':''"
+      :right-text="getText"
       @click-right="onClickRight"
       @click-left="onClickLeft"
     />
@@ -23,6 +23,14 @@ export default {
     title: {
       type: String,
       default: '首页'
+    },
+    rightText: {
+      type: String,
+      default: ''
+    },
+    isdisableback: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -30,7 +38,11 @@ export default {
 
     }
   },
-
+  computed: {
+    getText() {
+      return this.$store.state.app.rightText
+    }
+  },
   watch: {
 
   },
@@ -45,7 +57,7 @@ export default {
       // wx.showToast({ title: '点击返回', icon: 'none' })
     },
     onClickRight() {
-      alert(2)
+      this.$parent.$emit('rightAction', this.rightText)
       // wx.showToast({ title: '点击按钮', icon: 'none' })
     }
   }

@@ -1,13 +1,9 @@
 import Mock from 'mockjs'
-import { param2Obj } from '../src/utils'
+import { param2Obj } from '../src/utils/common'
 import home from './home'
-import login from './login'
-import userinfo from './user'
 
 const mocks = [
-  ...home,
-  ...login,
-  ...userinfo
+  ...home
 
 ]
 
