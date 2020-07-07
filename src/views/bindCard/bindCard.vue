@@ -4,6 +4,7 @@
     <!-- 卡片轮播 -->
     <swiper ref="mySwiper" :options="swiperOption" class="swiper" @slideChangeTransitionEnd="slideChangeTransitionEnd">
       <swiper-slide><img src="@/assets/images/card1.jpg" class="img"></swiper-slide>
+      <swiper-slide><img src="@/assets/images/card1.jpg" class="img"></swiper-slide>
       <div slot="pagination" class="swiper-pagination"/>
     </swiper>
     <!-- 滑至第一张图 显示以下内容 -->
@@ -14,9 +15,9 @@
           v-model="cardNo"
           :rules="validate.CardNo==null?[]:validate.CardNo"
           type="digit"
-          name="借记卡卡号测试"
-          label="借记卡卡号测试"
-          placeholder="请输入借记卡卡号测试"
+          name="借记卡卡号"
+          label="借记卡卡号"
+          placeholder="请输入借记卡卡号"
           clearable
           required
         />
@@ -286,12 +287,12 @@ export default {
 
 <style lang="scss" scoped>
 .swiper{
-  width: 100%;
+  // width: 100%;
   height: 250px;
   padding: 10px 0;
 }
 .img{
-    width: 100%;
+    width: 80%;
     padding: 0 10%;
 }
 .checkBox{
