@@ -1,5 +1,6 @@
 const path = require('path')
-
+const autoprefixer = require('autoprefixer')
+const pxtorem = require('postcss-pxtorem')
 function resolve(dir = '') {
   return path.join(__dirname, './src', dir)
 }
@@ -54,18 +55,27 @@ module.exports = {
   },
   css: {
     loaderOptions: {
-      sass: {
-        data:
-          '@import "@/assets/scss/_var.scss";@import "@/assets/scss/_mixin.scss";'
-      },
-      less: {
-        javascriptEnabled: true,
-        modifyVars: {
-          // less 文件覆盖（文件路径为绝对路径）
-          // 这里千万要写对，不然就会报错，或者直接没有效果，也找不到原因
-          hack: `true; @import "${path.resolve(__dirname, 'src/assets/index.less')}";`
-        }
+      postcss: {
+        plugins: [
+          autoprefixer(),
+          pxtorem({
+            rootValue: 37.5,
+            propList: ['*']
+          })
+        ]
       }
+      // sass: {
+      //   data:
+      //     '@import "@/assets/scss/_var.scss";@import "@/assets/scss/_mixin.scss";'
+      // },
+      // less: {
+      //   javascriptEnabled: true,
+      //   modifyVars: {
+      //     // less 文件覆盖（文件路径为绝对路径）
+      //     // 这里千万要写对，不然就会报错，或者直接没有效果，也找不到原因
+      //     hack: `true; @import "${path.resolve(__dirname, 'src/assets/index.less')}";`
+      //   }
+      // }
 
       // less: {
       //   data:

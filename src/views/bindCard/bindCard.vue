@@ -14,9 +14,9 @@
           v-model="cardNo"
           :rules="validate.CardNo==null?[]:validate.CardNo"
           type="digit"
-          name="借记卡卡号"
-          label="借记卡卡号"
-          placeholder="请输入借记卡卡号"
+          name="借记卡卡号测试"
+          label="借记卡卡号测试"
+          placeholder="请输入借记卡卡号测试"
           clearable
           required
         />
@@ -298,6 +298,10 @@ export default {
   margin: 20px 14px;
 }
 .checkItem{
+  font-size:15px;
   margin-top: 10px;
+}
+.text-desc{
+  font-size:15px;
 }
 </style>

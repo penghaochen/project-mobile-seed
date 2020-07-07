@@ -94,12 +94,14 @@ export default {
     }
     .card-mark{
         padding: 10px 0;
+        font-size:15px;
     }
     .card-tools{
         display: flex;
         border-top: 1px solid #a00;
         justify-content: space-between;
         padding: 10px 0;
+        font-size:15px;
     }
 
 }

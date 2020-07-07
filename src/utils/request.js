@@ -50,7 +50,6 @@ service.interceptors.response.use(
       return Promise.reject(res)
     }
   }, error => {
-    alert(JSON.stringify(error))
     console.log('err' + error) // for debug
     store.state.app.show = false // 关闭遮罩
     Dialog.alert({
