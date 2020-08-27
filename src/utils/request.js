@@ -9,16 +9,12 @@ import {
 } from 'vant'
 // import qs from 'qs'
 import store from '@/store'
-import {
-  baseUrl,
-  timeout,
-  headers
-} from '@/api/api.config'
 
+import { apiUrl } from '@/settings/defaultSetting'
 // axios 配置
 const service = axios.create({
-  baseURL: baseUrl, // 请求根路径
-  timeout: timeout // 超时时间
+  baseURL: apiUrl.baseUrl, // 请求根路径
+  timeout: apiUrl.timeout // 超时时间
 })
 
 // 请求拦截器
